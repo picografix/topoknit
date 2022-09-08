@@ -32,12 +32,18 @@ class contactNeighbours():
         Purl = 1
         Tuck
         """
+        self.i = 0
+        self.j = 0
         self.st = 0
         self.av = 3
         self.del_i = 0
         self.del_j = 0
         self.mv = (self.del_i, self.del_j)
         pass
+
+        
+    def print(self):
+        print(f"CN at {self.i},{self.j} \n Stitch Type = {ST.get(self.st)} \n AV = {AV.get(self.av)} \n MV = {AV.get(self.mv)}")
 
 class TMatrix():
     def __init__(self, input) -> None:
