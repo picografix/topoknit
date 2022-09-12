@@ -33,19 +33,10 @@ class contactNeighbours():
         Purl = 1
         Tuck
         """
-<<<<<<< HEAD
-        self.i = 0
-        self.j = 0
-        self.st = NULL
-        self.av = 3
-        self.del_i = NULL
-        self.del_j = NULL
-=======
         self.st = 0
         self.av = 0
         self.del_i = 0
         self.del_j = 0
->>>>>>> a9a37d6a35c0a2ef8bed973a4f2d407a924772b5
         self.mv = (self.del_i, self.del_j)
         pass
     
