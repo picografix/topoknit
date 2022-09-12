@@ -1,4 +1,5 @@
 # imports 
+from asyncio.windows_events import NULL
 import numpy as np
 
 
@@ -34,10 +35,10 @@ class contactNeighbours():
         """
         self.i = 0
         self.j = 0
-        self.st = 0
+        self.st = NULL
         self.av = 3
-        self.del_i = 0
-        self.del_j = 0
+        self.del_i = NULL
+        self.del_j = NULL
         self.mv = (self.del_i, self.del_j)
         pass
 
