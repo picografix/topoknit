@@ -51,15 +51,10 @@ class contactNeighbours():
 
 
     def getST(self):
-        print(ST_K.get(self.st))
-
-
-    def print(self):
-        print(self.st,self.av, self.del_i,self.del_j, end= "\n")
-
-        
-    def print(self):
-        print(f"CN: ST = {ST_K.get(self.st)}, AV = {AV.get(self.av)}, MV = {self.del_i,self.del_j} \n")
+        return ST_K.get(self.st)
+      
+    def show(self):
+        print(f"CN: ST = {self.getST()}, AV = {AV.get(self.av)}, MV = {self.del_i,self.del_j} \n")
 
 class TMatrix():
     def __init__(self, inp) -> None:
@@ -69,7 +64,7 @@ class TMatrix():
         # create a array of zeros of size 2M x N+1
         # self.data = [[0]*(2*self.m)]*(self.n+1)
         self.data = [[0 for i in range(self.m)] for j in range(self.n)]
-
+        self.inp = inp
         for j in range(self.n):
             for i in range(self.m):
                 temp = contactNeighbours()
@@ -115,12 +110,48 @@ class TMatrix():
     def size(self):
         print(len(self.data),len(self.data[0]))
 
-    def knitPurlStich(self,low, mode, stichType):
+
+    def knitPurl(self,i,j,st, last):
+
+        """
+          p2 -> p3
+          |     |
+        ->p1    p4->
+        
+        """
+
+        p1 = self.data[i][j]
+        p1.st = st
+        p1.av = 1
+        p2 = self.data[i+1][j]
+        p2.av = 0
+        p3 = self.data[i+1][j+1]
+        p3.av = 0
+        p4 = self.data[i][j+1]
+        p4.st = st
+        p4.av = 1
+        last.next = p1
+        p1.next = p2
+        p2.next = p3
+        p3.next = p4
+        last = p4
+
+
+        
+    def stitchNew(self):
+        last = contactNeighbours()
+        for i in range(len(self.inp)):
+            for j in range(len(self.inp[i])):
+                st = ST.get(self.inp[i][j])
+                self.knitPurl(i,2*j,st,last)
+
+
+
+    def stitch(self,low, mode, stichType):
         # low is lower row in which stich needs to be done
         # mode is left or right
         # self.data is top to bottom array (we are using inverse matrix than research paper)
         st = stichType
-        data = self.data
         # low represents the row number
         last= 0
         if(mode==0):
@@ -173,10 +204,5 @@ class TMatrix():
 
     def printDetail(self):
         for i in self.data:
-            for j in range(len(i)):
-                # print(i[j])
-                t= i[j]
-
-                print(t.print(), end=";")
-                
-            print("\n")
+            for j in i:
+                j.show()
