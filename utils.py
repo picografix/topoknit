@@ -33,7 +33,7 @@ AV = {
 }
 class contactNeighbours():
 
-    def __init__(self) -> None:
+    def __init__(self) :
 
         # define ST = Stitch type, AV = Actualization Value, MV = Movement Vector (del_i,del_j)
         """
@@ -42,20 +42,24 @@ class contactNeighbours():
         Purl = 1
         Tuck
         """
-        self.st = 4
+        self.st = 6
         self.av = 0
         self.del_i = 0
         self.del_j = 0
         self.mv = (self.del_i, self.del_j)
         self.next = 0
-        pass
-    
+
+
+    def getST(self):
+        print(ST_K.get(self.st))
+
+
     def print(self):
         print(self.st,self.av, self.del_i,self.del_j, end= "\n")
 
         
     def print(self):
-        print(f"CN at {self.i},{self.j} \n Stitch Type = {ST.get(self.st)} \n AV = {AV.get(self.av)} \n MV = {AV.get(self.mv)}")
+        print(f"CN: ST = {ST_K.get(self.st)}, AV = {AV.get(self.av)}, MV = {self.del_i,self.del_j} \n")
 
 class TMatrix():
     def __init__(self, inp) -> None:
@@ -71,8 +75,6 @@ class TMatrix():
                 temp = contactNeighbours()
                 self.data[j][i] = copy.copy(temp)
 
-        print(self.data[1][1])
-        print(self.data[0][1])
         
                 
 
@@ -164,14 +166,17 @@ class TMatrix():
         for i in self.data:
             for j in range(len(i)):
                 # print(i[j])
-                print(ST_K.get(i[j].st), end=" ")
+                print(ST_K.get(i[j].st), end=";")
         
             print("\n")
+
 
     def printDetail(self):
         for i in self.data:
             for j in range(len(i)):
                 # print(i[j])
-                print(ST_K.get(i[j].st), end=" ")
+                t= i[j]
+
+                print(t.print(), end=";")
                 
             print("\n")
