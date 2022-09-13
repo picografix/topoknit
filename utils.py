@@ -167,3 +167,11 @@ class TMatrix():
                 print(ST_K.get(i[j].st), end=" ")
         
             print("\n")
+
+    def printDetail(self):
+        for i in self.data:
+            for j in range(len(i)):
+                # print(i[j])
+                print(ST_K.get(i[j].st), end=" ")
+                
+            print("\n")
