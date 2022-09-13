@@ -66,8 +66,8 @@ class TMatrix():
         # self.data = [[0]*(2*self.m)]*(self.n+1)
         self.data = [[0 for i in range(self.m)] for j in range(self.n)]
 
-        for j in range(self.n+1):
-            for i in range(2*self.m):
+        for j in range(self.n):
+            for i in range(self.m):
                 temp = contactNeighbours()
                 self.data[j][i] = copy.copy(temp)
 
@@ -146,7 +146,7 @@ class TMatrix():
                 t1.av = 1
                 t1.next = last
                 last = t1
-                
+
             # modifying j+1 row
                 t1 = self.data[low+1][i]
                 t1.st = 6 #Null value

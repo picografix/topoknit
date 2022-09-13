@@ -7,7 +7,7 @@ inp = [["K","K","K"],
          ["K","K","K"]]
 
 
-inpInit = [["K","K","K","K"],["K","K","K","K"]]       
+inpInit = [["K","K","K","K"]]       
 
 tm = TMatrix(inpInit)
 
@@ -15,7 +15,7 @@ tm = TMatrix(inpInit)
 print("Before")
 tm.print()
 
-tm.readinpRowLeft(inpInit)
+tm.knitPurlStich(0,0,0)
 # tm.print_row(0)
 print("\nAfter")
 tm.print()
