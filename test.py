@@ -1,6 +1,6 @@
 from utils import contactNeighbours, TMatrix
 import utils
-cn = contactNeighbours()
+cn = contactNeighbours(0,0)
 # cn.print()
 inp = [["K","K","K"],
          ["K","K","K"],
@@ -16,3 +16,8 @@ tm.stitchNew()
 tm.print()
 # tm.printDetail()
 # tm.data[0][1].show()
+# curr = tm.data[0][0]
+# for i in range(8):
+    
+#     print(curr.getST())
+#     curr = curr.next
