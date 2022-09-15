@@ -2,8 +2,6 @@ from matplotlib.patches import ConnectionPatch
 import matplotlib.pyplot as plt
 
 
-# Draw a simple arrow between two points in axes coordinates
-# within a single axes.
 def addPath(xyA,xyB,ax1):
 
 
@@ -23,10 +21,9 @@ x = [1,1,2,2,3,3]
 y = [0,1,1,0,0,1]
 fig, ax1 = plt.subplots(1, 1)
 
-for i in range(5):
-  A = (x[i],y[i])
-  B = (x[i+1],y[i+1])
-  addPath(A,B,ax1)
-
-plt.show()
+if __name__ == "__main__":
+	for i in range(5):
+		A = (x[i],y[i])
+		B = (x[i+1],y[i+1])
+		addPath(A,B,ax1)
 
