@@ -49,7 +49,7 @@ class contactNeighbours():
         self.del_i = 0
         self.del_j = 0
         self.mv = (self.del_i, self.del_j)
-        self.next = 0
+        self.next = -1
 
 
     def getST(self):
@@ -139,7 +139,7 @@ class TMatrix():
         p1.next = p2
         p2.next = p3
         p3.next = p4
-        last = p4
+        return p4
 
 
         
@@ -148,7 +148,7 @@ class TMatrix():
         for i in range(len(self.inp)):
             for j in range(len(self.inp[i])):
                 st = ST.get(self.inp[i][j])
-                self.knitPurl(i,2*j,st,last)
+                last = self.knitPurl(i,2*j,st,last)
 
 
 
