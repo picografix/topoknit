@@ -48,20 +48,15 @@ class contactNeighbours():
         self.av = 0
         self.del_i = 0
         self.del_j = 0
-<<<<<<< HEAD
-        self.mv = [self.del_i, self.del_j]
-        self.next = 0
-=======
         self.mv = (self.del_i, self.del_j)
         self.next = -1
->>>>>>> 61bca3e30d81086240134822d064863498414e5e
 
 
     def getST(self):
         return ST_K.get(self.st)
       
     def getXY(self):
-        return self.x,self.y
+        return self.y, self.x
 
     def show(self):
         print(f"CN: ST = {self.getST()}, AV = {AV.get(self.av)}, MV = {self.del_i,self.del_j} \n")
