@@ -33,7 +33,7 @@ AV = {
 }
 class contactNeighbours():
 
-    def __init__(self) :
+    def __init__(self,x,y) :
 
         # define ST = Stitch type, AV = Actualization Value, MV = Movement Vector (del_i,del_j)
         """
@@ -42,17 +42,27 @@ class contactNeighbours():
         Purl = 1
         Tuck
         """
+        self.x = x
+        self.y = y
         self.st = 6
         self.av = 0
         self.del_i = 0
         self.del_j = 0
+<<<<<<< HEAD
         self.mv = [self.del_i, self.del_j]
         self.next = 0
+=======
+        self.mv = (self.del_i, self.del_j)
+        self.next = -1
+>>>>>>> 61bca3e30d81086240134822d064863498414e5e
 
 
     def getST(self):
         return ST_K.get(self.st)
       
+    def getXY(self):
+        return self.x,self.y
+
     def show(self):
         print(f"CN: ST = {self.getST()}, AV = {AV.get(self.av)}, MV = {self.del_i,self.del_j} \n")
 
@@ -67,7 +77,7 @@ class TMatrix():
         self.inp = inp
         for j in range(self.n):
             for i in range(self.m):
-                temp = contactNeighbours()
+                temp = contactNeighbours(j,i)
                 self.data[j][i] = copy.copy(temp)
 
         
@@ -134,7 +144,7 @@ class TMatrix():
         p1.next = p2
         p2.next = p3
         p3.next = p4
-        last = p4
+        return p4
 
     def tuck(self,i,j,last):
         """
@@ -163,11 +173,11 @@ class TMatrix():
         last = p3
         
     def stitchNew(self):
-        last = contactNeighbours()
+        last = contactNeighbours(-1,-1)
         for i in range(len(self.inp)):
             for j in range(len(self.inp[i])):
                 st = ST.get(self.inp[i][j])
-                self.knitPurl(i,2*j,st,last)
+                last = self.knitPurl(i,2*j,st,last)
 
 
 
@@ -221,7 +231,7 @@ class TMatrix():
         for i in self.data:
             for j in range(len(i)):
                 # print(i[j])
-                print(ST_K.get(i[j].st), end=";")
+                print(ST_K.get(i[j].st),i[j].getXY(), end=";")
         
             print("\n")
 
