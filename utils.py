@@ -46,7 +46,7 @@ class contactNeighbours():
         self.av = 0
         self.del_i = 0
         self.del_j = 0
-        self.mv = (self.del_i, self.del_j)
+        self.mv = [self.del_i, self.del_j]
         self.next = 0
 
 
@@ -136,7 +136,31 @@ class TMatrix():
         p3.next = p4
         last = p4
 
-
+    def tuck(self,i,j,last):
+        """
+          p2 -> p3
+          |     |
+        ->p1    p4->
+        
+        """
+        # st= 3
+        p1 = self.data[i][j]
+        # p1.st = st
+        p1.av = 0
+        p1.mv[1] += 1
+        p2 = self.data[i+1][j]
+        p2.av = 2
+        p3 = self.data[i+1][j+1]
+        p3.av = 2
+        p4 = self.data[i][j+1]
+        # p4.st = st
+        p4.av = 0
+        p4.mv[1] += 1
+        last.next = p2
+        # p1.next = p2
+        p2.next = p3
+        # p3.next = p4
+        last = p3
         
     def stitchNew(self):
         last = contactNeighbours()
