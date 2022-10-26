@@ -6,16 +6,13 @@ import matplotlib.pyplot as plt
 
 cn = contactNeighbours(0,0)
 # cn.print()
-inp = [["K","K","K"],
-         ["K","K","K"],
-         ["K","K","K"]]
-
-
-inp1 = [["K","K","K","K"],["K","K","K","K"],["K","K","K","K"]]       
-inp2 = [["K","K","P","K"],["K","K","P","K"]]
-inp3 = [["K","K","P","K"],["K","K","P","K"],["K","K","P","K"],["K","K","P","K"]]
-inp4 = [["K","K","P","K"],["K","K","P","K"],["K","K","P","K"],["K","K","P","K"],["K","K","P","K"]]
-tm = TMatrix(inp4)
+inp1 = [["K","K","K","K"]]*1
+inp2 = [["K","K","K","K"]]*2
+inp3 = [["K","K","K","K"]]*3
+inp4 = [["K","K","K","K"]]*4
+inp5 = [["K","K","K","K"]]*5
+inpn = [["K","K","K","K"]]*10
+tm = TMatrix(inpn)
 tm.stitchNew()
 tm.print()
 

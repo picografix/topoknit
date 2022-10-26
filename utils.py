@@ -138,7 +138,8 @@ class TMatrix():
         p4 = self.data[i][j+1]
         p4.st = st
         p4.av = 1
-        last.next = p1
+        if(last.next==-1):
+            last.next = p1
         # last.prev = p1
         p1.next = p2
         p2.next = p3
@@ -164,7 +165,8 @@ class TMatrix():
         p4 = self.data[i][j-1]
         p4.st = st
         p4.av = 1
-        last.prev = p1
+        if(last.prev==-1):
+            last.prev = p1
         # last.next = p1
         p1.prev = p2
         p2.prev = p3
