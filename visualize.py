@@ -2,14 +2,14 @@ from matplotlib.patches import ConnectionPatch
 import matplotlib.pyplot as plt
 
 
-def addPath(xyA,xyB,ax1):
+def addPath(xyA,xyB,ax1, c):
 
 
 	coordsA = "data"
 	coordsB = "data"
 	con = ConnectionPatch(xyA, xyB, coordsA, coordsB,
 												arrowstyle="->", shrinkA=5, shrinkB=5,
-												mutation_scale=20, fc="w")
+												mutation_scale=20, fc="w", color = c)
 
 	ax1.plot([xyA[0], xyB[0]], [xyA[1], xyB[1]], "bo")
 	ax1.add_artist(con)

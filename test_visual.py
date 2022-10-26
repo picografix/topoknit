@@ -42,7 +42,7 @@ for i in range(len(tm.data)):
         try:
             A = temp.getXYRevert()
             B = temp.next.getXYRevert()
-            addPath(A,B,ax1)
+            addPath(A,B,ax1, "g")
         except:
             print("No next for", temp.getXY())
         
@@ -51,7 +51,7 @@ for i in range(len(tm.data)):
         try:
             A = temp.getXYRevert()
             B = temp.prev.getXYRevert()
-            addPath(A,B,ax1)
+            addPath(A,B,ax1, "r")
         
         except:
             print("No prev for ", temp.getXY())
