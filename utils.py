@@ -50,12 +50,15 @@ class contactNeighbours():
         self.del_j = 0
         self.mv = (self.del_i, self.del_j)
         self.next = -1
+        self.prev = -1
 
 
     def getST(self):
         return ST_K.get(self.st)
       
     def getXY(self):
+        return self.x, self.y
+    def getXYRevert(self):
         return self.y, self.x
 
     def show(self):
@@ -116,12 +119,12 @@ class TMatrix():
         print(len(self.data),len(self.data[0]))
 
 
-    def knitPurl(self,i,j,st, last):
+    def knitPurlRight(self,i,j,st, last):
 
         """
           p2 -> p3
           |     |
-        ->p1    p4->
+        ->p1    p4
         
         """
 
@@ -136,9 +139,36 @@ class TMatrix():
         p4.st = st
         p4.av = 1
         last.next = p1
+        # last.prev = p1
         p1.next = p2
         p2.next = p3
         p3.next = p4
+        return p4
+    
+    def knitPurlLeft(self,i,j,st, last):
+
+        """
+          p3 <- p2
+          |     |
+      <- p4    p1<-
+        
+        """
+
+        p1 = self.data[i][j]
+        p1.st = st
+        p1.av = 1
+        p2 = self.data[i+1][j]
+        p2.av = 0
+        p3 = self.data[i+1][j-1]
+        p3.av = 0
+        p4 = self.data[i][j-1]
+        p4.st = st
+        p4.av = 1
+        last.prev = p1
+        # last.next = p1
+        p1.prev = p2
+        p2.prev = p3
+        p3.prev = p4
         return p4
 
     def tuck(self,i,j,last):
@@ -170,10 +200,23 @@ class TMatrix():
     def stitchNew(self):
         last = contactNeighbours(-1,-1)
         for i in range(len(self.inp)):
-            for j in range(len(self.inp[i])):
-                st = ST.get(self.inp[i][j])
-                last = self.knitPurl(i,2*j,st,last)
 
+            if(i%2==0):
+                # if(i!=0):
+                #     last.next = self.data[i][j]
+                
+                for j in range(len(self.inp[i])):
+                    st = ST.get(self.inp[i][j])
+                    last = self.knitPurlRight(i,2*j,st,last)
+
+            else:
+                # last.prev = self.data[i][2*j-1]
+                for j in reversed(range(1,len(self.inp[i])+1)):
+                    st = ST.get(self.inp[i][j-1])
+                    last = self.knitPurlLeft(i,2*j-1,st,last)
+                    # print(last.getXY())
+                    # print("hi")
+                
 
 
     def stitch(self,low, mode, stichType):
