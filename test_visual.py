@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 
 
 cn = contactNeighbours(0,0)
-# cn.print()
 inp1 = [["K","K","K","K"]]*1
 inp2 = [["K","K","K","K"]]*2
 inp3 = [["K","K","K","K"]]*3
@@ -31,7 +30,6 @@ for i in range(len(tm.data)):
         except:
             print(temp.prev)
         
-        # print(temp.next)
 
 fig,ax1 = plt.subplots(1, 1)
 

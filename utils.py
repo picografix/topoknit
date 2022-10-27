@@ -95,20 +95,13 @@ class TMatrix():
     def readinpRowLeft(self, inp):
         i=0
         st = ST.get(inp[0][1])
-        # print(self.data[1][1])
-        # print(self.data[0][1])
         
-        # temp = self.data[1][1]
 
-        # temp.st = st
         for j in range(len(inp[0])):
-            # print(f"Mod {i,j}")
             st = ST.get(inp[0][j])
             temp = self.data[i][2*j]
-            # temp1 = self.data[i][2*j+1]
             self.data[i][2*j+1].st = st
             temp.st = st
-            # temp1.st = st
 
     def initialize(self,arr):
         return self.__initialize(arr)
@@ -140,7 +133,6 @@ class TMatrix():
         p4.av = 1
         if(last.next==-1):
             last.next = p1
-        # last.prev = p1
         p1.next = p2
         p2.next = p3
         p3.next = p4
@@ -167,7 +159,6 @@ class TMatrix():
         p4.av = 1
         if(last.prev==-1):
             last.prev = p1
-        # last.next = p1
         p1.prev = p2
         p2.prev = p3
         p3.prev = p4
@@ -180,9 +171,7 @@ class TMatrix():
         ->p1    p4->
         
         """
-        # st= 3
         p1 = self.data[i][j]
-        # p1.st = st
         p1.av = 0
         p1.mv[1] += 1
         p2 = self.data[i+1][j]
@@ -190,13 +179,10 @@ class TMatrix():
         p3 = self.data[i+1][j+1]
         p3.av = 2
         p4 = self.data[i][j+1]
-        # p4.st = st
         p4.av = 0
         p4.mv[1] += 1
         last.next = p2
-        # p1.next = p2
         p2.next = p3
-        # p3.next = p4
         last = p3
         
     def stitchNew(self):
@@ -204,20 +190,15 @@ class TMatrix():
         for i in range(len(self.inp)):
 
             if(i%2==0):
-                # if(i!=0):
-                #     last.next = self.data[i][j]
                 
                 for j in range(len(self.inp[i])):
                     st = ST.get(self.inp[i][j])
                     last = self.knitPurlRight(i,2*j,st,last)
 
             else:
-                # last.prev = self.data[i][2*j-1]
                 for j in reversed(range(1,len(self.inp[i])+1)):
                     st = ST.get(self.inp[i][j-1])
                     last = self.knitPurlLeft(i,2*j-1,st,last)
-                    # print(last.getXY())
-                    # print("hi")
                 
 
 
@@ -233,7 +214,6 @@ class TMatrix():
             for i in range(self.m):
                 # modifying j row
                 t1 = self.data[low][i]
-                # t2 = self.data[low][i]
                 t1.st = st
                 t1.av = 1
                 t1.next = last
@@ -248,7 +228,6 @@ class TMatrix():
             # right
             for i in reversed(range(self.m)):
                 t1 = self.data[low][i]
-                # t2 = self.data[low][i]
                 t1.st = st
                 t1.av = 1
                 t1.next = last
@@ -270,7 +249,6 @@ class TMatrix():
     def print(self):
         for i in self.data:
             for j in range(len(i)):
-                # print(i[j])
                 print(ST_K.get(i[j].st),i[j].getXY(), end=";")
         
             print("\n")
