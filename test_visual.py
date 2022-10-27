@@ -17,9 +17,9 @@ tm.stitchNew()
 tm.print()
 
         
-for i in range(len(tm.data)):
+for i, item in enumerate(tm.data):
     for j in range(len(tm.data[0])):
-        temp = tm.data[i][j]
+        temp = item[j]
         print(temp.getXY(),temp.getST(), end=" ")
         try:
             print(temp.next.getXY(), end=" ")
@@ -35,9 +35,9 @@ for i in range(len(tm.data)):
 
 fig,ax1 = plt.subplots(1, 1)
 
-for i in range(len(tm.data)):
+for i, item in enumerate(tm.data):
     for j in range(len(tm.data[0])):
-        temp = tm.data[i][j]
+        temp = item[j]
         # try next
         try:
             A = temp.getXYRevert()
