@@ -50,7 +50,9 @@ class contactNeighbours():
         self.del_j = 0
         self.mv = (self.del_i, self.del_j)
         self.next = -1
+        self.back = -1
         self.prev = -1
+        self.front = -1
 
 
     def getST(self):
@@ -119,6 +121,24 @@ class TMatrix():
         print(len(self.data),len(self.data[0]))
 
 
+    def loopRight(self,p1,p2,p3,p4):
+        p1.next = p2
+        p2.back = p1
+        p2.next = p3
+        p3.back = p2
+        p3.next = p4
+        p4.back = p3
+        return p1,p2,p3,p4
+    
+    def loopLeft(self,p1,p2,p3,p4):
+        p1.prev = p2
+        p2.front = p1 # double pointer
+        p2.prev = p3
+        p3.front = p2
+        p3.prev = p4
+        p4.front = p3
+        return p1,p2,p3,p4
+    
     def knitPurlRight(self,i,j,st, last):
 
         """
@@ -140,10 +160,14 @@ class TMatrix():
         p4.av = 1
         if(last.next==-1):
             last.next = p1
+            p1.back = last
         # last.prev = p1
         p1.next = p2
+        p2.back = p1
         p2.next = p3
+        p3.back = p2
         p3.next = p4
+        p4.back = p3
         return p4
     
     def knitPurlLeft(self,i,j,st, last):
@@ -167,11 +191,79 @@ class TMatrix():
         p4.av = 1
         if(last.prev==-1):
             last.prev = p1
+            p1.front = last
         # last.next = p1
         p1.prev = p2
+        p2.front = p1 # double pointer
         p2.prev = p3
+        p3.front = p2
         p3.prev = p4
+        p4.front = p3
         return p4
+        
+        # this wont happen like this
+        #  you need to use av param to solve this
+
+    def missLeft(self,i,j,st,last):
+        p1 = self.data[i][j]
+        p1.st = st
+        p1.av = 0
+        p2 = self.data[i+1][j]
+        p2.av = 1
+        p3 = self.data[i+1][j-1]
+        p3.av = 1
+        p4 = self.data[i][j-1]
+        p4.st = st
+        p4.av = 0
+        ii = i-1
+        pp1 = self.data[ii][j]
+        pp2 = self.data[ii][j-1]
+        
+        while(self.data[ii][j].av==0):
+            ii = ii-1
+            pp1 = self.data[ii][j]
+            pp2 = self.data[ii][j-1]
+
+        print(pp1.getXY(),pp2.getXY())
+        
+        # check back and front
+        #  remove p1 and p4 connection
+        
+        if(pp1.prev == pp2):
+            pp1,p2,p3,pp2 = self.loopLeft(pp1,p2,p3,pp2)
+
+        elif(pp2.next == pp1):
+            # print("Debug")
+            pp2,p3,p2,pp1 = self.loopRight(pp2,p3,p2,pp1)
+
+        return last 
+    def missRight(self,i,j,st, last):
+        p1 = self.data[i][j]
+        p1.st = st
+        p1.av = 0
+        p2 = self.data[i+1][j]
+        p2.av = 1
+        p3 = self.data[i+1][j+1]
+        p3.av = 1
+        p4 = self.data[i][j+1]
+        p4.st = st
+        p4.av = 0
+        ii = i-1
+        pp1 = self.data[ii][j]
+        pp2 = self.data[ii][j+1]
+        while(self.data[ii][j].av==0):
+            ii = ii-1
+            pp1 = self.data[ii][j]
+            pp2 = self.data[ii][j+1]
+
+        # check back and front
+        if(pp1.next == pp2):
+            pp1,p2,p3,pp2 = self.loopRight(pp1,p2,p3,pp2)
+
+        elif(pp2.prev == pp1):
+            pp2,p3,p2,pp1 = self.loopLeft(pp2,p3,p2,pp1)
+
+        return last 
 
     def tuck(self,i,j,last):
         """
@@ -209,13 +301,21 @@ class TMatrix():
                 
                 for j in range(len(self.inp[i])):
                     st = ST.get(self.inp[i][j])
-                    last = self.knitPurlRight(i,2*j,st,last)
-
+                    print(st)
+                    if(st==0):
+                        last = self.knitPurlRight(i,2*j,st,last)
+                    elif(st==2):
+                        last = self.missRight(i,2*j,st,last)
             else:
                 # last.prev = self.data[i][2*j-1]
                 for j in reversed(range(1,len(self.inp[i])+1)):
                     st = ST.get(self.inp[i][j-1])
-                    last = self.knitPurlLeft(i,2*j-1,st,last)
+                    if(st==0):
+
+                        last = self.knitPurlLeft(i,2*j-1,st,last)
+                    elif(st==2):
+                        last = self.missLeft(i,2*j-1,st,last)
+
                     # print(last.getXY())
                     # print("hi")
                 

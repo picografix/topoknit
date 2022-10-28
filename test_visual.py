@@ -11,8 +11,9 @@ inp2 = [["K","K","K","K"]]*2
 inp3 = [["K","K","K","K"]]*3
 inp4 = [["K","K","K","K"]]*4
 inp5 = [["K","K","K","K"]]*5
-inpn = [["K","K","K","K"]]*100
-tm = TMatrix(inpn)
+inpn = [["K","K","K","K"]]*20
+miss_inp1 = [["K","K","K"],["K","M","K"],["K","K","K"]]
+tm = TMatrix(miss_inp1)
 tm.stitchNew()
 tm.print()
 
@@ -44,7 +45,8 @@ for i in range(len(tm.data)):
             B = temp.next.getXYRevert()
             addPath(A,B,ax1, "g")
         except:
-            print("No next for", temp.getXY())
+            pass
+            # print("No next for", temp.getXY())
         
         # try prev
 
@@ -54,7 +56,8 @@ for i in range(len(tm.data)):
             addPath(A,B,ax1, "r")
         
         except:
-            print("No prev for ", temp.getXY())
+            pass
+            # print("No prev for ", temp.getXY())
 
 plt.show()
 
