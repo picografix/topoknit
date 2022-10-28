@@ -11,7 +11,7 @@ inp2 = [["K","K","K","K"]]*2
 inp3 = [["K","K","K","K"]]*3
 inp4 = [["K","K","K","K"]]*4
 inp5 = [["K","K","K","K"]]*5
-inpn = [["K","K","K","K"]]*10
+inpn = [["K","K","K","K"]]*100
 tm = TMatrix(inpn)
 tm.stitchNew()
 tm.print()
