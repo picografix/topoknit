@@ -205,34 +205,48 @@ class TMatrix():
         #  you need to use av param to solve this
 
     def missLeft(self,i,j,st,last):
+        ii = i
+        pp1 = self.data[ii][j]
+        pp2 = self.data[ii][j-1]
+
+        while(self.data[ii][j].av!=0):
+            ii = ii-1
+            pp1 = self.data[ii][j]
+            pp2 = self.data[ii][j-1]
+
+        a = 0
+        if(pp1.prev == pp2):
+            a=0
+            pp1.prev = -1
+            pp2.prev = -1
+        elif(pp2.next == pp1):
+            a=1
+            pp2.next = -1
+            pp1.next=-1
+        pp1 = self.data[ii-1][j]
+        pp2 = self.data[ii-1][j-1]
+        # print("Debug = ",ii, pp1.getXY())
         p1 = self.data[i][j]
         p1.st = st
-        p1.av = 0
+        p1.av = -1
         p2 = self.data[i+1][j]
         p2.av = 1
         p3 = self.data[i+1][j-1]
         p3.av = 1
         p4 = self.data[i][j-1]
         p4.st = st
-        p4.av = 0
-        ii = i-1
-        pp1 = self.data[ii][j]
-        pp2 = self.data[ii][j-1]
+        p4.av = -1
         
-        while(self.data[ii][j].av==0):
-            ii = ii-1
-            pp1 = self.data[ii][j]
-            pp2 = self.data[ii][j-1]
 
-        print(pp1.getXY(),pp2.getXY())
+        
         
         # check back and front
         #  remove p1 and p4 connection
         
-        if(pp1.prev == pp2):
+        if(a==0):
             pp1,p2,p3,pp2 = self.loopLeft(pp1,p2,p3,pp2)
 
-        elif(pp2.next == pp1):
+        elif(a==1):
             # print("Debug")
             pp2,p3,p2,pp1 = self.loopRight(pp2,p3,p2,pp1)
 
