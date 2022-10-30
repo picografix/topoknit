@@ -76,7 +76,9 @@ class TopologyGraph():
     def nextCN(self,i,j, legNode, currRow):
         i_ = i
         j_ = j
+        ln = True
         if(legNode):
+            ln = False
             if(j%2==0):
                 i = i+1
 
@@ -95,15 +97,17 @@ class TopologyGraph():
                 else:
                     j = j-1
             else:
+                ln = True
                 i = i-1
         
         if(j<0 or j>self.m):
-            return i+1,j_, currRow+1
+            return i+1,j_, currRow+1, True
         else:
-            return i,j, currRow
+            return i,j, currRow, ln
         
     def followTheYarn(self):
         i,j,legNode,currentStitchRow = 0,0,True,0
         yarnPath = []
         while(i<self.n and j < self.m):
-            if (self.addToList())
+            if (self.addToList()):
+                pass
