@@ -7,6 +7,7 @@ class TopologyGraph():
         # take the size of inp
         self.n = len(inp)+1
         self.m = 2*len(inp[0])
+        self.buffer_nextCN = []
         # create a array of zeros of size 2M x N+1
         # self.data = [[0]*(2*self.m)]*(self.n+1)
         self.data = [[0 for i in range(self.m)] for j in range(self.n)]
@@ -69,11 +70,56 @@ class TopologyGraph():
 
                     k1.mv = (0,1)
                     k2.mv = (0,1)
+    
+    def finalLocationRecursive(self,i,j):
+        if(self.data[i][j].st == 1 or self.data[i][j].st == 0):
+            return i,j
+        else:
+            return self.finalLocationRecursive(i+self.data[i][j].mv[0],j)
 
+    def finalLocation(self,i,j):
+        if(i==self.n-1):
+            return i,j
+        elif(self.data[i][j].mv[1]!=0):
+            return self.finalLocationRecursive(i,j+self.data[i][j].mv[1])
+        else:
+            return self.finalLocationRecursive(i+self.data[i][j].mv[0],j)
+
+
+    def isACN(self,i,j):
+        if(self.data[i][j].av !=0):
+            return True
+        else:
+            return False
     def addToList(self,i,j,legNode,yarnPath,DS):
-        pass
+        if(legNode):
+            if(self.isACN(i,j)):
+                return True
+            else:
+                return False
+        else:
+            av = self.data[i][j].av
+            if (av==0):
+                return False
+            elif(av==2):
+                # UACN
+                if (i%2!=0 and j%2==0):
+                    m,n = self.buffer_nextCN[-2]
+                else:
+                    m,n = self.nextCN(i,j,legNode,i)
+                
+                finalI, finalJ = self.finalLocation(i,j)
+
+                if(m<finalI):
+                    self.data[i][j].av = 1
+                    return True
+                else:
+                    return False
+            else:
+                return True
     
     def nextCN(self,i,j, legNode, currRow):
+        self.buffer_nextCN.append(i,j)
         i_ = i
         j_ = j
         ln = True
@@ -104,6 +150,7 @@ class TopologyGraph():
             return i+1,j_, currRow+1, True
         else:
             return i,j, currRow, ln
+            
         
     def followTheYarn(self):
         i,j,legNode,currentStitchRow = 0,0,True,0

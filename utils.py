@@ -54,7 +54,6 @@ class contactNeighbours():
         self.prev = -1
         self.front = -1
 
-
     def getST(self):
         return ST_K.get(self.st)
       
