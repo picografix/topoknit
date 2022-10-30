@@ -12,7 +12,7 @@ inp3 = [["K","K","K","K"]]*3
 inp4 = [["K","K","K","K"]]*4
 inp5 = [["K","K","K","K"]]*5
 inpn = [["K","K","K","K"]]*20
-miss_inp1 = [["K","K","K"],["K","M","K"],["K","K","K"]]
+miss_inp1 = [["K","K","K"],["K","M","K"],["K","M","K"],["K","K","K"]]
 tm = TMatrix(miss_inp1)
 tm.stitchNew()
 tm.print()
