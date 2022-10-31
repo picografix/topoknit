@@ -2,6 +2,7 @@ from utils import contactNeighbours
 import copy
 from utils import ST
 from visualize import addPath
+import matplotlib.pyplot as plt
 
 class TopologyGraph():
     def __init__(self,inp) -> None:
@@ -172,9 +173,23 @@ class TopologyGraph():
         
 
         return yarnPath
-    
+    def isBorder(self,i,j,legnode):
+        return 1
     def draw(self):
+        fig,ax1 = plt.subplots(1, 1)
         yarnList = self.followTheYarn()
         for i in range(len(yarnList)-1):
-
-    
+            cI,cJ,currRow = yarnList[i]
+            nI,nJ,nextRow = yarnList[i+1]
+            legNode = (cJ==currRow)
+            edgeColor = 0
+            if(currRow%2!=0):
+                edgeColor = "r"
+            else:
+                edgeColor = "g"
+            if(self.isBorder(cI,cJ,legNode)):
+                addPath((cI,cJ),(nI,nJ),ax1,edgeColor)
+            else:
+                addPath((cI,cJ),(nI,nJ),ax1,edgeColor)
+        
+        plt.show()
