@@ -1,6 +1,7 @@
 from utils import contactNeighbours
 import copy
 from utils import ST
+from visualize import addPath
 
 class TopologyGraph():
     def __init__(self,inp) -> None:
@@ -8,6 +9,7 @@ class TopologyGraph():
         self.n = len(inp)+1
         self.m = 2*len(inp[0])
         self.buffer_nextCN = []
+        self.acnList = []
         # create a array of zeros of size 2M x N+1
         # self.data = [[0]*(2*self.m)]*(self.n+1)
         self.data = [[0 for i in range(self.m)] for j in range(self.n)]
@@ -91,7 +93,7 @@ class TopologyGraph():
             return True
         else:
             return False
-    def addToList(self,i,j,legNode,yarnPath,DS):
+    def addToList(self,i,j,legNode,yarnPath):
         if(legNode):
             if(self.isACN(i,j)):
                 return True
@@ -154,7 +156,23 @@ class TopologyGraph():
         
     def followTheYarn(self):
         i,j,legNode,currentStitchRow = 0,0,True,0
+        l = [0,0,0]
         yarnPath = []
         while(i<self.n and j < self.m):
-            if (self.addToList()):
-                pass
+            if (self.addToList(i,j,legNode,yarnPath)):
+                if(legNode):
+                    l = [i,j,currentStitchRow]
+                else:
+                    i_,j_ = self.finalLocation(i,j)
+                    l = [i_,j_,currentStitchRow]
+                yarnPath.append(l)
+            i,j,l,currentStitchRow = self.nextCN(i,j,legNode,currentStitchRow)
+        
+
+        return yarnPath
+    
+    def draw(self):
+        yarnList = self.followTheYarn()
+        for i in range(len(yarnList)-1):
+            
+    
