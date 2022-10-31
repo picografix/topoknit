@@ -106,13 +106,15 @@ class TopologyGraph():
             elif(av==2):
                 # UACN
                 if (i%2!=0 and j%2==0):
-                    m,n = self.buffer_nextCN[-2]
+                    lastCN = yarnPath[-1]
+                    m = lastCN[0]
+                    n = lastCN[1]
                 else:
-                    m,n = self.nextCN(i,j,legNode,i)
+                    m,n, currRow, ln = self.nextCN(i,j,legNode,i)
                 
                 finalI, finalJ = self.finalLocation(i,j)
 
-                if(m<finalI):
+                if(n<finalJ):
                     self.data[i][j].av = 1
                     return True
                 else:
@@ -174,5 +176,5 @@ class TopologyGraph():
     def draw(self):
         yarnList = self.followTheYarn()
         for i in range(len(yarnList)-1):
-            
+
     
