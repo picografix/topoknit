@@ -8,7 +8,7 @@ inp = [["K","K","K"],
          ["K","K","K"]]
 
 inp1 = [["K","K","P","K"]]
-inpInit = [["K","K","P","K"],["K","K","P","K"]]       
+inpInit = [["K","K","P","K"],["K","K","P","K"],["K","K","P","K"]]       
 miss_inp1 = [["K","K","K","K"],["K","T","T","K"],["K","K","K","K"]]
 
 """
@@ -43,3 +43,9 @@ yp = tp.followTheYarn()
 print(yp)
 print(tp.nextCN(0,2,True,0))
 # tp.draw()
+
+i,j,ln,cr = 0,0,True,0
+
+for x in range(10):
+    print(i,j,ln,cr)
+    i,j,ln,cr = tp.nextCN(i,j,ln,cr)

@@ -127,13 +127,14 @@ class TopologyGraph():
         # self.buffer_nextCN.append((i,j))
         i_ = i
         j_ = j
-        ln = True
+        ln = False
         if(legNode):
-            ln = False
+            
             if(j%2==0):
                 i = i+1
-
+                ln = False    
             else:
+                ln = True
                 if(currRow%2==0):
 
                     j = j+1
@@ -152,9 +153,9 @@ class TopologyGraph():
                 i = i-1
         
         if(j<0 or j>self.m):
-            return i+1,j_, currRow+1, True
+            return i+1,j_, True, currRow+1
         else:
-            return i,j, currRow, ln
+            return i,j, ln, currRow
             
         
     def followTheYarn(self):
@@ -163,7 +164,7 @@ class TopologyGraph():
         yarnPath = []
         while(i<self.n and j < self.m):
 
-            print("loop working")
+            print(f"loop i={i} j={j}")
             if (self.addToList(i,j,legNode,yarnPath)):
                 if(legNode):
                     l = [i,j,currentStitchRow]
