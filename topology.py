@@ -124,7 +124,7 @@ class TopologyGraph():
                 return True
     
     def nextCN(self,i,j, legNode, currRow):
-        self.buffer_nextCN.append(i,j)
+        # self.buffer_nextCN.append((i,j))
         i_ = i
         j_ = j
         ln = True
@@ -162,6 +162,8 @@ class TopologyGraph():
         l = [0,0,0]
         yarnPath = []
         while(i<self.n and j < self.m):
+
+            print("loop working")
             if (self.addToList(i,j,legNode,yarnPath)):
                 if(legNode):
                     l = [i,j,currentStitchRow]
@@ -193,3 +195,4 @@ class TopologyGraph():
                 addPath((cI,cJ),(nI,nJ),ax1,edgeColor)
         
         plt.show()
+        plt.savefig("trala.png")
