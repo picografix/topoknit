@@ -7,7 +7,7 @@ inp = [["K","K","K"],
          ["K","K","K"],
          ["K","K","K"]]
 
-inp1 = [["K","K","P","K"]]
+inp1 = [["K","K","P","K"]]*10
 inpInit = [["K","K","P","K"],["K","K","P","K"],["K","K","P","K"]]       
 miss_inp1 = [["K","K","K","K"],["K","T","T","K"],["K","K","K","K"]]
 
@@ -37,15 +37,16 @@ def showTable(tab):
         print()
 
 tp = TopologyGraph(inp1)
+print()
 tp.stitch()
 showTable(tp.data)
-yp = tp.followTheYarn()
-print(yp)
-print(tp.nextCN(0,2,True,0))
-# tp.draw()
+# yp = tp.followTheYarn()
+# print(yp)
+# print(tp.nextCN(0,2,True,0))
+tp.draw()
 
-i,j,ln,cr = 0,0,True,0
+# i,j,ln,cr = 0,0,True,0
 
-for x in range(10):
-    print(i,j,ln,cr)
-    i,j,ln,cr = tp.nextCN(i,j,ln,cr)
+# for x in range(30):
+#     print(i,j,ln,cr)
+#     i,j,ln,cr = tp.nextCN(i,j,ln,cr)

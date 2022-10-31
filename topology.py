@@ -1,3 +1,4 @@
+from operator import truediv
 from utils import contactNeighbours
 import copy
 from utils import ST
@@ -102,7 +103,7 @@ class TopologyGraph():
                 return False
         else:
             av = self.data[i][j].av
-            if (av==0):
+            if (av==3):
                 return False
             elif(av==2):
                 # UACN
@@ -127,35 +128,58 @@ class TopologyGraph():
         # self.buffer_nextCN.append((i,j))
         i_ = i
         j_ = j
-        ln = False
+
+        
+        
+        # if(not legNode and j%2!=0 and currRow%2==0):
+        #     i = i-1
+        #     legNode=True
+        # elif(legNode and j%2==0 and currRow%2==0):
+        #     i = i+1
+        #     legNode = False
+        # elif()
+        # elif((not legNode and currRow%2==0 and j%2==0) or (legNode and currRow%2==0 and j%2!=0)):
+        #     j = j+1
+        # elif((not legNode and currRow%2!=0 and j%2==0) or (legNode and currRow%2!=0 and j%2!=0)):
+        #     j = j-1
+        
+
+
+
+
         if(legNode):
             
-            if(j%2==0):
-                i = i+1
-                ln = False    
-            else:
-                ln = True
-                if(currRow%2==0):
-
-                    j = j+1
+            if(currRow%2==0):    
+                if(j%2==0):
+                    i=i+1
+                    legNode = False
                 else:
-                    j = j-1
+                    j = j+1
+            else:
+                if(j%2==0):
+                    j=j-1
+                else:
+                    i = i+1
+                    legNode = False
                 
         else:
-            if(j%2==0):
-                if(currRow%2==0):
-                    j = j+1
-                
+            if(currRow%2==0):    
+                if(j%2!=0):
+                    i=i-1
+                    legNode = True
                 else:
-                    j = j-1
+                    j = j+1
             else:
-                ln = True
-                i = i-1
-        
-        if(j<0 or j>self.m):
+                if(j%2!=0):
+                    j=j-1
+                else:
+                    i = i-1
+                    legNode = True
+
+        if(j<0 or j>=self.m):
             return i+1,j_, True, currRow+1
         else:
-            return i,j, ln, currRow
+            return i,j, legNode, currRow
             
         
     def followTheYarn(self):
@@ -164,15 +188,17 @@ class TopologyGraph():
         yarnPath = []
         while(i<self.n and j < self.m):
 
-            print(f"loop i={i} j={j}")
+            
             if (self.addToList(i,j,legNode,yarnPath)):
+                print(f"loop i={i} j={j}")
                 if(legNode):
                     l = [i,j,currentStitchRow]
                 else:
                     i_,j_ = self.finalLocation(i,j)
+                    # print(f"i_ {i_} j_ {j_}")
                     l = [i_,j_,currentStitchRow]
                 yarnPath.append(l)
-            i,j,l,currentStitchRow = self.nextCN(i,j,legNode,currentStitchRow)
+            i,j,legNode,currentStitchRow = self.nextCN(i,j,legNode,currentStitchRow)
         
 
         return yarnPath
@@ -191,9 +217,9 @@ class TopologyGraph():
             else:
                 edgeColor = "g"
             if(self.isBorder(cI,cJ,legNode)):
-                addPath((cI,cJ),(nI,nJ),ax1,edgeColor)
+                addPath((cJ,cI),(nJ,nI),ax1,edgeColor)
             else:
-                addPath((cI,cJ),(nI,nJ),ax1,edgeColor)
+                addPath((cJ,cI),(nJ,nI),ax1,edgeColor)
         
         plt.show()
         plt.savefig("trala.png")
