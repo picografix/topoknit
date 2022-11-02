@@ -167,7 +167,7 @@ class TopologyGraph():
         if(self.data[i][j].st == "K" or self.data[i][j].st == "P"):
             return i,j
         else:
-            return self.finalLocationRecursive(i+self.data[i][j].mv[0],j)
+            return self.finalLocationRecursive(i-self.data[i][j].mv[0],j)
 
     def finalLocation(self,i,j):
         if(i==self.n-1):
@@ -175,7 +175,7 @@ class TopologyGraph():
         elif(self.data[i][j].mv[1]!=0):
             return self.finalLocationRecursive(i,j+self.data[i][j].mv[1])
         else:
-            return self.finalLocationRecursive(i+self.data[i][j].mv[0],j)
+            return self.finalLocationRecursive(i-self.data[i][j].mv[0],j)
 
 
     def isACN(self,i,j):
@@ -278,7 +278,7 @@ class TopologyGraph():
 
             
             if (self.addToList(i,j,legNode,yarnPath)):
-                print(f"loop i={i} j={j}")
+                # print(f"loop i={i} j={j}")
                 if(legNode):
                     l = [i,j,currentStitchRow]
                 else:

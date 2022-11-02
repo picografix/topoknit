@@ -36,18 +36,18 @@ def showTable(tab):
             print(f"{tab[i][j].st},{tab[i][j].av}", end="   ")
         print()
 
-tp = TopologyGraph(miss)
+tp = TopologyGraph(miss[0:2])
 print()
 tp.stitch()
 showTable(tp.data)
 
 
-# yp = tp.followTheYarn()
-# print(yp)
+yp = tp.followTheYarn()
+print(yp)
 # print(tp.nextCN(0,2,True,0))
 
 
-tp.draw()
+# tp.draw()
 
 # i,j,ln,cr = 0,0,True,0
 
