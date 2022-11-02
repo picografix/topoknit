@@ -101,19 +101,14 @@ class TopologyGraph():
                     k1 = self.data[i][2*j]
                     k2 = self.data[i][2*j+1]
 
-                    k1.st = st
-                    k2.st = st
-
-                    k1.av = 0
-                    k2.av = 0                    
-
-                    k1.mv = (0,1)
-                    k2.mv = (0,1)
+                    
 
                     p1 = self.data[i+1][2*j]
                     p2 = self.data[i+1][2*j+1]
-                    
-    
+
+                    p1.set(6,3,(0,0))
+                    p2.set(6,3,(0,0))
+
     def finalLocationRecursive(self,i,j):
         if(self.data[i][j].st == 1 or self.data[i][j].st == 0):
             return i,j
