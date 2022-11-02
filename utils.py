@@ -62,6 +62,11 @@ class contactNeighbours():
     def getXYRevert(self):
         return self.y, self.x
 
+    def set(self,st,av,mv):
+        self.st = st
+        self.av = av
+        self.mv = mv
+        return True
     def show(self):
         print(f"CN: ST = {self.getST()}, AV = {AV.get(self.av)}, MV = {self.del_i,self.del_j} \n")
 

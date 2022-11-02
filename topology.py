@@ -49,15 +49,50 @@ class TopologyGraph():
                     k1 = self.data[i][2*j]
                     k2 = self.data[i][2*j+1]
 
+                    # stitch type
                     k1.st = 6
                     k2.st = 6
+                    
+                    k1.mv = (k1.mv[0],1)
+                    k2.mv = (k2.mv[0],1)
 
-                    k1.av = 1
-                    k2.av = 1                    
+                    if(k1.av==2):
+                        # CN is UACN
+                        k1.av = 2
+                        k2.av = 2
+                    elif(k1.av==3):
+                        # CN is Empty
+                          
+                        k1.mv = (0,-1)
+                        k2.mv = (0,-1)
+                        x = i
+                        temp = self.data[x][j]
+                        while(x>=0):
+                            temp = self.data[x][j]
+                            if(temp.mv[1]>0):
+                                break
+                            x = x-1
+                        
 
-                    k1.mv = (0,2)
-                    k2.mv = (0,2)
+                        temp.mv = (temp.mv[0],temp.mv[1]+1)
+                    else:
+                    # set av 
+                        k1.av = 0
+                        k2.av = 0                    
 
+
+
+                    
+                    
+                    # set all null
+                    p1 = self.data[i+1][2*j]
+                    p2 = self.data[i+1][2*j+1]
+                    p1.mv = (0,-1)
+                    p2.mv = (0,-1)
+                    p1.st = 6
+                    p2.st = 6
+                    p1.av = 3
+                    p2.av = 3
                 elif(st==3):
                     # transfer stitch
                     pass
@@ -74,6 +109,10 @@ class TopologyGraph():
 
                     k1.mv = (0,1)
                     k2.mv = (0,1)
+
+                    p1 = self.data[i+1][2*j]
+                    p2 = self.data[i+1][2*j+1]
+                    
     
     def finalLocationRecursive(self,i,j):
         if(self.data[i][j].st == 1 or self.data[i][j].st == 0):
@@ -222,4 +261,4 @@ class TopologyGraph():
                 addPath((cJ,cI),(nJ,nI),ax1,edgeColor)
         
         plt.show()
-        plt.savefig("trala.png")
+        # plt.savefig("trala.png")
