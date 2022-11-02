@@ -44,8 +44,8 @@ class contactNeighbours():
         """
         self.x = x
         self.y = y
-        self.st = 6
-        self.av = 0
+        self.st = "NULL"
+        self.av = "PCN"
         self.del_i = 0
         self.del_j = 0
         self.mv = (self.del_i, self.del_j)
@@ -55,7 +55,7 @@ class contactNeighbours():
         self.front = -1
 
     def getST(self):
-        return ST_K.get(self.st)
+        return self.st
       
     def getXY(self):
         return self.x, self.y

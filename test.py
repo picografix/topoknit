@@ -8,8 +8,8 @@ inp = [["K","K","K"],
          ["K","K","K"]]
 
 inp1 = [["K","K","P","K"]]*10
-inpInit = [["K","K","P","K"],["K","K","P","K"],["K","K","P","K"]]       
-miss_inp1 = [["K","K","K","K"],["K","T","T","K"],["K","K","K","K"]]
+tuck = [["K","K","K","K"],["K","T","T","K"],["K","K","K","K"]]       
+miss = [["K","K","K"],["K","M","K"],["K","M","K"],["K","K","K"]]
 
 """
 tm = TMatrix(inpInit)
@@ -33,16 +33,20 @@ for i in range(24):
 def showTable(tab):
     for i in reversed(range(len(tab))):
         for j in (range(len(tab[i]))):
-            print(tab[i][j].st, end=" ")
+            print(f"{tab[i][j].st},{tab[i][j].av}", end="   ")
         print()
 
-tp = TopologyGraph(inp1)
+tp = TopologyGraph(miss)
 print()
 tp.stitch()
 showTable(tp.data)
+
+
 # yp = tp.followTheYarn()
 # print(yp)
 # print(tp.nextCN(0,2,True,0))
+
+
 tp.draw()
 
 # i,j,ln,cr = 0,0,True,0

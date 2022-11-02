@@ -25,92 +25,146 @@ class TopologyGraph():
     def stitch(self):
         for i in range(len(self.inp)):
             for j in range(len(self.inp[i])):
-                st = ST.get(self.inp[i][j])
+                st = self.inp[i][j]
 
-                if(st==0 or st==1):
+                if(st=="K" or st=="P"):
                     # knit/purl stitch
 
                     
                     k1 = self.data[i][2*j]
                     k2 = self.data[i][2*j+1]
 
-                    k1.st = st
-                    k2.st = st
+                    if(k1.av=="UACN"):
+                        # CN is UACN
 
-                    k1.av = 1
-                    k2.av = 1                    
+                        # debug here if probelems exist
+                        k1.set(st,"UACN",(0,k1.mv[1]))
+                        k2.set(st,"UACN",(0,k1.mv[1]))
 
-                    k1.mv = (0,0)
-                    k2.mv = (0,0)
+                        # modify this if needed
+                        p1 = self.data[i+1][2*j]
+                        p2 = self.data[i+1][2*j+1]
 
-                elif(st==2):
+                        p1.set("NULL","PCN",(0,0))
+                        p2.set("NULL","PCN",(0,0))
+                    elif(k1.av=="E"):
+                        # CN is Empty
+                        k1.set("NULL","E",(0,-1))
+                        k2.set("NULL","E",(0,-1))
+                        
+                    else:
+                    # PCN
+                        if(k1.mv[1]!=0):
+
+                            k1.set(st,"PCN",(0,k1.mv[1]))
+                            k2.set(st,"PCN",(0,k1.mv[1]))   
+                        else:
+                            k1.set(st,"ACN",(0,0))
+                            k2.set(st,"ACN",(0,0))
+
+
+                    
+
+                elif(st=="M"):
                     # miss stitch
                     # need to look for miss stitch
                     k1 = self.data[i][2*j]
                     k2 = self.data[i][2*j+1]
-
-                    # stitch type
-                    k1.st = 6
-                    k2.st = 6
-                    
-                    k1.mv = (k1.mv[0],1)
-                    k2.mv = (k2.mv[0],1)
-
-                    if(k1.av==2):
+                    if(k1.av=="UACN"):
                         # CN is UACN
-                        k1.av = 2
-                        k2.av = 2
-                    elif(k1.av==3):
+                        k1.set("NULL","UACN",(1,k1.mv[1]))
+                        k2.set("NULL","UACN",(1,k1.mv[1]))
+                    elif(k1.av=="E"):
                         # CN is Empty
-                          
-                        k1.mv = (0,-1)
-                        k2.mv = (0,-1)
+                        k1.set("NULL","E",(0,-1))
+                        k2.set("NULL","E",(0,-1))
                         x = i
                         temp = self.data[x][j]
-                        while(x>=0):
+                        while(x<self.n):
                             temp = self.data[x][j]
                             if(temp.mv[1]>0):
                                 break
-                            x = x-1
-                        
+                            x = x+1
 
                         temp.mv = (temp.mv[0],temp.mv[1]+1)
                     else:
-                    # set av 
-                        k1.av = 0
-                        k2.av = 0                    
-
-
-
-                    
-                    
+                    # PCN
+                        k1.set("NULL","PCN",(1,k1.mv[1]))  
+                        k2.set("NULL","PCN",(1,k1.mv[1]))            
+                                   
                     # set all null
                     p1 = self.data[i+1][2*j]
                     p2 = self.data[i+1][2*j+1]
-                    p1.mv = (0,-1)
-                    p2.mv = (0,-1)
-                    p1.st = 6
-                    p2.st = 6
-                    p1.av = 3
-                    p2.av = 3
-                elif(st==3):
-                    # transfer stitch
-                    pass
-                elif(st==5):
+                    p1.set("NULL","E",(0,-1))
+                    p2.set("NULL","E",(0,-1))
+                elif(st=="Tr"):
+
+                    # need modification
+                    k1 = self.data[i][2*j]
+                    k2 = self.data[i][2*j+1]
+
+                    if(k1.av=="UACN"):
+                        # CN is UACN
+
+                        # debug here if probelems exist
+                        k1.set(st,"UACN",(0,k1.mv[1]))
+                        k2.set(st,"UACN",(0,k1.mv[1]))
+
+                        # modify this if needed
+                        p1 = self.data[i+1][2*j]
+                        p2 = self.data[i+1][2*j+1]
+
+                        p1.set("NULL","PCN",(0,0))
+                        p2.set("NULL","PCN",(0,0))
+                    elif(k1.av=="E"):
+                        # CN is Empty
+                        k1.set(st,"E",(0,-1))
+                        k2.set(st,"E",(0,-1))
+                        
+                    else:
+                    # PCN
+                        if(k1.mv[1]!=0):
+
+                            k1.set(st,"PCN",(0,k1.mv[1]))
+                            k2.set(st,"PCN",(0,k1.mv[1]))   
+                        else:
+                            k1.set(st,"ACN",(0,0))
+                elif(st=="T"):
                     # tuck stitch
                     k1 = self.data[i][2*j]
                     k2 = self.data[i][2*j+1]
 
+                    if(k1.av=="UACN"):
+                        # CN is UACN
+                        k1.set("NULL","UACN",(1,k1.mv[1]))
+                        k2.set("NULL","UACN",(1,k1.mv[1]))
+                    elif(k1.av=="E"):
+                        # CN is Empty
+                        k1.set("NULL","E",(0,-1))
+                        k2.set("NULL","E",(0,-1))
+                        x = i
+                        temp = self.data[x][j]
+                        while(x<self.n):
+                            temp = self.data[x][j]
+                            if(temp.mv[1]>0):
+                                break
+                            x = x+1
+
+                        temp.mv = (temp.mv[0],temp.mv[1]+1)
+                    else:
+                    # PCN
+                        k1.set("NULL","PCN",(1,k1.mv[1]))  
+                        k2.set("NULL","PCN",(1,k1.mv[1]))           
                     
 
                     p1 = self.data[i+1][2*j]
                     p2 = self.data[i+1][2*j+1]
 
-                    p1.set(6,3,(0,0))
-                    p2.set(6,3,(0,0))
+                    p1.set("NULL","UACN",(0,0))
+                    p2.set("NULL","UACN",(0,0))
 
     def finalLocationRecursive(self,i,j):
-        if(self.data[i][j].st == 1 or self.data[i][j].st == 0):
+        if(self.data[i][j].st == "K" or self.data[i][j].st == "P"):
             return i,j
         else:
             return self.finalLocationRecursive(i+self.data[i][j].mv[0],j)
@@ -137,9 +191,9 @@ class TopologyGraph():
                 return False
         else:
             av = self.data[i][j].av
-            if (av==3):
+            if (av=="E"):
                 return False
-            elif(av==2):
+            elif(av=="UACN"):
                 # UACN
                 if (i%2!=0 and j%2==0):
                     lastCN = yarnPath[-1]
