@@ -206,7 +206,7 @@ class TopologyGraph():
             elif(av=="UACN"):
                 # UACN
                 if (i%2==0 and j%2!=0):
-                    print("Get last CN")
+                    # print("Get last CN")
                     lastCN = yarnPath[-1]
                     m = lastCN[0]
                     n = lastCN[1]
@@ -215,9 +215,9 @@ class TopologyGraph():
                     m,n, currRow, ln = self.nextCN(i,j,legNode,currStitchRow)
                 
                 finalI, finalJ = self.finalLocation(i,j)
-                print(f"{i} {j} - {m},{n} - {finalI},{finalJ}")
+                # print(f"{i} {j} - {m},{n} - {finalI},{finalJ}")
                 if(m<finalI):
-                    print("updating ACN")
+                    # print("updating ACN")
                     self.data[i][j].av = "ACN"
                     return True
                 else:
@@ -308,7 +308,7 @@ class TopologyGraph():
     def draw(self):
         fig,ax1 = plt.subplots(1, 1)
         yarnList = self.followTheYarn()
-        print(yarnList)
+        # print(yarnList)
         for i in range(len(yarnList)-1):
             cI,cJ,currRow = yarnList[i]
             nI,nJ,nextRow = yarnList[i+1]
