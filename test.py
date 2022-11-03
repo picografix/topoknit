@@ -33,21 +33,21 @@ for i in range(24):
 def showTable(tab):
     for i in reversed(range(len(tab))):
         for j in (range(len(tab[i]))):
-            print(f"{tab[i][j].st},{tab[i][j].av}", end="   ")
+            print(f"{tab[i][j].st} {tab[i][j].av} {tab[i][j].mv}", end=";")
         print()
 
-tp = TopologyGraph(miss[0:2])
-print()
+tp = TopologyGraph(miss[0:4])
+print(tp.n,tp.m)
 tp.stitch()
 showTable(tp.data)
 
 
-yp = tp.followTheYarn()
-print(yp)
-# print(tp.nextCN(0,2,True,0))
+# yp = tp.followTheYarn()
+# print(yp)
+# print(tp.nextCN(2,3,False,0))
 
 
-# tp.draw()
+tp.draw()
 
 # i,j,ln,cr = 0,0,True,0
 
