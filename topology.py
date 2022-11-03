@@ -27,7 +27,7 @@ class TopologyGraph():
             for j in range(len(self.inp[i])):
                 st = self.inp[i][j]
 
-                if(st=="K" or st=="P"):
+                if st in ("K", "P"):
                     # knit/purl stitch
 
                     
@@ -195,7 +195,7 @@ class TopologyGraph():
             return False
     def addToList(self,i,j,legNode,yarnPath,currStitchRow):
         if(legNode):
-            if(self.data[i][j].st == "K" or self.data[i][j].st == "P"):
+            if self.data[i][j].st in ("K", "P"):
                 return True
             else:
                 return False
