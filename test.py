@@ -36,7 +36,7 @@ def showTable(tab):
             print(f"{tab[i][j].st} {tab[i][j].av} {tab[i][j].mv}", end=";")
         print()
 
-tp = TopologyGraph(miss[0:4])
+tp = TopologyGraph(tuck[0:3])
 print(tp.n,tp.m)
 tp.stitch()
 
