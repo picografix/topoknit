@@ -149,14 +149,18 @@ class TopologyGraph():
                         k1.set("NULL","E",(0,-1))
                         k2.set("NULL","E",(0,-1))
                         x = i
-                        temp = self.data[x][j]
-                        while(x<self.n):
-                            temp = self.data[x][j]
-                            if(temp.mv[1]>0):
+                        temp = self.data[x][2*j]
+                        temp2 = self.data[x][2*j+1]
+                        while(x>=0):
+                            temp = self.data[x][2*j]
+                            temp2 = self.data[x][2*j+1]
+                            if(temp.mv[0]>0):
+                                # print("Breaking")
                                 break
-                            x = x+1
+                            x = x-1
 
-                        temp.mv = (temp.mv[0],temp.mv[1]+1)
+                        temp.mv = (temp.mv[0]+1,0)
+                        temp2.mv = (temp2.mv[0]+1,0)
                     else:
                     # PCN
                         k1.set("NULL","PCN",(1,k1.mv[1]))  
@@ -189,9 +193,9 @@ class TopologyGraph():
             return True
         else:
             return False
-    def addToList(self,i,j,legNode,yarnPath):
+    def addToList(self,i,j,legNode,yarnPath,currStitchRow):
         if(legNode):
-            if(self.data[i][j].av == "ACN"):
+            if(self.data[i][j].st == "K" or self.data[i][j].st == "P"):
                 return True
             else:
                 return False
@@ -206,12 +210,13 @@ class TopologyGraph():
                     m = lastCN[0]
                     n = lastCN[1]
                 else:
-                    m,n, currRow, ln = self.nextCN(i,j,legNode,i)
+                    m,n, currRow, ln = self.nextCN(i,j,legNode,currStitchRow)
                 
                 finalI, finalJ = self.finalLocation(i,j)
 
-                if(n<finalJ):
-                    self.data[i][j].av = 1
+                if(m<finalI):
+                    print("updating ACN")
+                    self.data[i][j].av = "ACN"
                     return True
                 else:
                     return False
@@ -283,13 +288,13 @@ class TopologyGraph():
         while(i<self.n and j < self.m):
 
             
-            if (self.addToList(i,j,legNode,yarnPath)):
+            if (self.addToList(i,j,legNode,yarnPath,currentStitchRow)):
                 # print(f"loop i={i} j={j}")
                 if(legNode):
                     l = [i,j,currentStitchRow]
                 else:
                     i_,j_ = self.finalLocation(i,j)
-                    print(f"i= {i} j= {j} i_ {i_} j_ {j_}")
+                    # print(f"i= {i} j= {j} i_ {i_} j_ {j_}")
                     l = [i_,j_,currentStitchRow]
                 yarnPath.append(l)
             i,j,legNode,currentStitchRow = self.nextCN(i,j,legNode,currentStitchRow)

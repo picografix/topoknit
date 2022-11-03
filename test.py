@@ -7,9 +7,9 @@ inp = [["K","K","K"],
          ["K","K","K"],
          ["K","K","K"]]
 
-inp1 = [["K","K","P","K"]]*10
+inp1 = [["K","K","K","K"]]
 tuck = [["K","K","K","K"],["K","T","T","K"],["K","K","K","K"]]       
-miss = [["K","K","K"],["K","M","K"],["K","M","K"],["K","K","K"]]
+miss = [["K","K","K"],["K","M","K"],["K","M","K"],["K","K","K"],["K","K","K"],["K","K","K"],["K","K","K"],["K","K","K"],["K","K","K"],["K","K","K"],["K","K","K"]]
 
 """
 tm = TMatrix(inpInit)
@@ -39,12 +39,13 @@ def showTable(tab):
 tp = TopologyGraph(miss[0:4])
 print(tp.n,tp.m)
 tp.stitch()
+
+
 showTable(tp.data)
-
-
 # yp = tp.followTheYarn()
-# print(yp)
-# print(tp.nextCN(2,3,False,0))
+# print(yp,"\n")
+# showTable(tp.data)
+# # print(tp.nextCN(2,3,False,0))
 
 
 tp.draw()
