@@ -1,6 +1,5 @@
 from visualize import addPath
 from utils import contactNeighbours,TMatrix
-from matplotlib.patches import ConnectionPatch
 import matplotlib.pyplot as plt
 
 

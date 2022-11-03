@@ -1,5 +1,4 @@
-from utils import contactNeighbours, TMatrix
-import utils
+from utils import contactNeighbours
 from topology import TopologyGraph
 cn = contactNeighbours(0,0)
 # cn.print()

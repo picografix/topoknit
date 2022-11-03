@@ -1,7 +1,5 @@
-from operator import truediv
 from utils import contactNeighbours
 import copy
-from utils import ST
 from visualize import addPath
 import matplotlib.pyplot as plt
 
