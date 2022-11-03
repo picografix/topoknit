@@ -189,16 +189,10 @@ class TopologyGraph():
 
 
     def isACN(self,i,j):
-        if(self.data[i][j].av !=0):
-            return True
-        else:
-            return False
+        return (self.data[i][j].av !=0)
     def addToList(self,i,j,legNode,yarnPath,currStitchRow):
         if(legNode):
-            if self.data[i][j].st in ("K", "P"):
-                return True
-            else:
-                return False
+            return self.data[i][j].st in ("K", "P")
         else:
             av = self.data[i][j].av
             if (av=="E"):
