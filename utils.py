@@ -125,7 +125,8 @@ class TMatrix():
         print(len(self.data),len(self.data[0]))
 
 
-    def loopRight(self,p1,p2,p3,p4):
+    @staticmethod
+    def loopRight(p1,p2,p3,p4):
         p1.next = p2
         p2.back = p1
         p2.next = p3
@@ -134,7 +135,8 @@ class TMatrix():
         p4.back = p3
         return p1,p2,p3,p4
     
-    def loopLeft(self,p1,p2,p3,p4):
+    @staticmethod
+    def loopLeft(p1,p2,p3,p4):
         p1.prev = p2
         p2.front = p1 # double pointer
         p2.prev = p3
