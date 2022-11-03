@@ -23,9 +23,9 @@ class TopologyGraph():
     
 
     def stitch(self):
-        for i in range(len(self.inp)):
-            for j in range(len(self.inp[i])):
-                st = self.inp[i][j]
+        for i, _ in enumerate(self.inp):
+            for j, item in enumerate(self.inp[i]):
+                st = item
 
                 if st in ("K", "P"):
                     # knit/purl stitch

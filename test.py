@@ -32,8 +32,8 @@ for i in range(24):
 
 def showTable(tab):
     for i in reversed(range(len(tab))):
-        for j in (range(len(tab[i]))):
-            print(f"{tab[i][j].st} {tab[i][j].av} {tab[i][j].mv}", end=";")
+        for j, item in enumerate(tab[i]):
+            print(f"{item.st} {item.av} {item.mv}", end=";")
         print()
 
 tp = TopologyGraph(miss)

@@ -107,9 +107,9 @@ class TMatrix():
         # temp = self.data[1][1]
 
         # temp.st = st
-        for j in range(len(inp[0])):
+        for j, item in enumerate(inp[0]):
             # print(f"Mod {i,j}")
-            st = ST.get(inp[0][j])
+            st = ST.get(item)
             temp = self.data[i][2*j]
             # temp1 = self.data[i][2*j+1]
             self.data[i][2*j+1].st = st
@@ -313,14 +313,14 @@ class TMatrix():
         
     def stitchNew(self):
         last = contactNeighbours(-1,-1)
-        for i in range(len(self.inp)):
+        for i, item in enumerate(self.inp):
 
             if(i%2==0):
                 # if(i!=0):
                 #     last.next = self.data[i][j]
                 
-                for j in range(len(self.inp[i])):
-                    st = ST.get(self.inp[i][j])
+                for j, item in enumerate(self.inp[i]):
+                    st = ST.get(item)
                     print(st)
                     if(st==0):
                         last = self.knitPurlRight(i,2*j,st,last)
@@ -328,8 +328,8 @@ class TMatrix():
                         last = self.missRight(i,2*j,st,last)
             else:
                 # last.prev = self.data[i][2*j-1]
-                for j in reversed(range(1,len(self.inp[i])+1)):
-                    st = ST.get(self.inp[i][j-1])
+                for j in reversed(range(1,len(item)+1)):
+                    st = ST.get(item[j-1])
                     if(st==0):
 
                         last = self.knitPurlLeft(i,2*j-1,st,last)
@@ -385,13 +385,13 @@ class TMatrix():
     # def kpStich(self,cn1):
 
     def print_row(self,i):
-        for j in range(len(self.data[i])):
-            print(ST_K.get(self.data[i][j].st), end=" ")
+        for j, item in enumerate(self.data[i]):
+            print(ST_K.get(item.st), end=" ")
     def print(self):
         for i in self.data:
-            for j in range(len(i)):
+            for j, item in enumerate(i):
                 # print(i[j])
-                print(ST_K.get(i[j].st),i[j].getXY(), end=";")
+                print(ST_K.get(item.st),item.getXY(), end=";")
         
             print("\n")
 
