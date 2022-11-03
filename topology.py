@@ -303,7 +303,8 @@ class TopologyGraph():
         
 
         return yarnPath
-    def isBorder(self,i,j,legnode):
+    @staticmethod
+    def isBorder(i,j,legnode):
         return 1
     def draw(self):
         fig,ax1 = plt.subplots(1, 1)
