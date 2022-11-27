@@ -4,6 +4,7 @@ import copy
 from utils import ST
 from visualize import addPath
 import matplotlib.pyplot as plt
+import networkx as nx
 
 class TopologyGraph():
     def __init__(self,inp) -> None:
@@ -20,7 +21,10 @@ class TopologyGraph():
             for i in range(self.m):
                 temp = contactNeighbours(j,i)
                 self.data[j][i] = copy.copy(temp)
-    
+        self.G = nx.DiGraph()
+        self.start = (0,0)
+        self.end = (0,0)
+
 
     def stitch(self):
         for i, _ in enumerate(self.inp):
@@ -30,7 +34,7 @@ class TopologyGraph():
                 if st in ("K", "P"):
                     # knit/purl stitch
 
-                    
+
                     k1 = self.data[i][2*j]
                     k2 = self.data[i][2*j+1]
 
@@ -51,19 +55,19 @@ class TopologyGraph():
                         # CN is Empty
                         k1.set(st,"E",(0,-1))
                         k2.set(st,"E",(0,-1))
-                        
+
                     else:
                     # PCN
                         if(k1.mv[1]!=0):
 
                             k1.set(st,"PCN",(0,k1.mv[1]))
-                            k2.set(st,"PCN",(0,k1.mv[1]))   
+                            k2.set(st,"PCN",(0,k1.mv[1]))
                         else:
                             k1.set(st,"ACN",(0,0))
                             k2.set(st,"ACN",(0,0))
 
 
-                    
+
 
                 elif(st=="M"):
                     # miss stitch
@@ -95,9 +99,9 @@ class TopologyGraph():
 
                     else:
                     # PCN
-                        k1.set("NULL","PCN",(1,k1.mv[1]))  
-                        k2.set("NULL","PCN",(1,k1.mv[1]))            
-                                   
+                        k1.set("NULL","PCN",(1,k1.mv[1]))
+                        k2.set("NULL","PCN",(1,k1.mv[1]))
+
                     # set all null
                     p1 = self.data[i+1][2*j]
                     p2 = self.data[i+1][2*j+1]
@@ -126,13 +130,13 @@ class TopologyGraph():
                         # CN is Empty
                         k1.set(st,"E",(0,-1))
                         k2.set(st,"E",(0,-1))
-                        
+
                     else:
                     # PCN
                         if(k1.mv[1]!=0):
 
                             k1.set(st,"PCN",(0,k1.mv[1]))
-                            k2.set(st,"PCN",(0,k1.mv[1]))   
+                            k2.set(st,"PCN",(0,k1.mv[1]))
                         else:
                             k1.set(st,"ACN",(0,0))
                 elif(st=="T"):
@@ -163,9 +167,9 @@ class TopologyGraph():
                         temp2.mv = (temp2.mv[0]+1,0)
                     else:
                     # PCN
-                        k1.set("NULL","PCN",(1,k1.mv[1]))  
-                        k2.set("NULL","PCN",(1,k1.mv[1]))           
-                    
+                        k1.set("NULL","PCN",(1,k1.mv[1]))
+                        k2.set("NULL","PCN",(1,k1.mv[1]))
+
 
                     p1 = self.data[i+1][2*j]
                     p2 = self.data[i+1][2*j+1]
@@ -213,7 +217,7 @@ class TopologyGraph():
                 else:
 
                     m,n, currRow, ln = self.nextCN(i,j,legNode,currStitchRow)
-                
+
                 finalI, finalJ = self.finalLocation(i,j)
                 # print(f"{i} {j} - {m},{n} - {finalI},{finalJ}")
                 if(m<finalI):
@@ -224,14 +228,14 @@ class TopologyGraph():
                     return False
             else:
                 return True
-    
+
     def nextCN(self,i,j, legNode, currRow):
         # self.buffer_nextCN.append((i,j))
         i_ = i
         j_ = j
 
-        
-        
+
+
         # if(not legNode and j%2!=0 and currRow%2==0):
         #     i = i-1
         #     legNode=True
@@ -243,14 +247,14 @@ class TopologyGraph():
         #     j = j+1
         # elif((not legNode and currRow%2!=0 and j%2==0) or (legNode and currRow%2!=0 and j%2!=0)):
         #     j = j-1
-        
+
 
 
 
 
         if(legNode):
-            
-            if(currRow%2==0):    
+
+            if(currRow%2==0):
                 if(j%2==0):
                     i=i+1
                     legNode = False
@@ -262,9 +266,9 @@ class TopologyGraph():
                 else:
                     i = i+1
                     legNode = False
-                
+
         else:
-            if(currRow%2==0):    
+            if(currRow%2==0):
                 if(j%2!=0):
                     i=i-1
                     legNode = True
@@ -281,15 +285,15 @@ class TopologyGraph():
             return i+1,j_, True, currRow+1
         else:
             return i,j, legNode, currRow
-            
-        
+
+
     def followTheYarn(self):
         i,j,legNode,currentStitchRow = 0,0,True,0
         l = [0,0,0]
         yarnPath = []
         while(i<self.n and j < self.m):
 
-            
+
             if (self.addToList(i,j,legNode,yarnPath,currentStitchRow)):
                 # print(f"loop i={i} j={j}")
                 if(legNode):
@@ -300,15 +304,25 @@ class TopologyGraph():
                     l = [i_,j_,currentStitchRow]
                 yarnPath.append(l)
             i,j,legNode,currentStitchRow = self.nextCN(i,j,legNode,currentStitchRow)
-        
+
 
         return yarnPath
+
+    def getResistance(self):
+        G = self.G
+        a,b = self.start
+        x,y = self.end
+        return nx.resistance_distance(G, f"{a},{b}", f"{y},{x}")
     @staticmethod
     def isBorder(i,j,legnode):
         return 1
     def draw(self):
-        fig,ax1 = plt.subplots(1, 1)
+        # fig,ax1 = plt.subplots(1, 1)
         yarnList = self.followTheYarn()
+        x,y,z = yarnList[-1]
+        a,b,c = yarnList[0]
+        self.end = (x,y)
+        self.start = (a,b)
         # print(yarnList)
         for i in range(len(yarnList)-1):
             cI,cJ,currRow = yarnList[i]
@@ -320,9 +334,24 @@ class TopologyGraph():
             else:
                 edgeColor = "g"
             if(self.isBorder(cI,cJ,legNode)):
-                addPath((cJ,cI),(nJ,nI),ax1,edgeColor)
+                n1 = f"{cJ},{cI}"
+                n2 = f"{nJ},{nI}"
+                self.G.add_node(n1,pos=(cJ,cI))
+                self.G.add_node(n2,pos=(nJ,nI))
+                self.G.add_edge(n1,n2,color=edgeColor)
+                # addPath((cJ,cI),(nJ,nI),ax1,edgeColor)
             else:
-                addPath((cJ,cI),(nJ,nI),ax1,edgeColor)
-        
+                # addPath((cJ,cI),(nJ,nI),ax1,edgeColor)
+                n1 = f"{cJ},{cI}"
+                n2 = f"{nJ},{nI}"
+                self.G.add_node(n1,pos=(cJ,cI))
+                self.G.add_node(n2,pos=(nJ,nI))
+                self.G.add_edge(n1,n2,color=edgeColor)
+
+
+    def show(self,labels = True):
+        colors = nx.get_edge_attributes(self.G,'color').values()
+        # pos = nx.circular_layout(self.G)
+        nx.draw(self.G,nx.get_node_attributes(self.G, 'pos'),edge_color=colors, with_labels=labels,node_color='blue',node_size=5)
         plt.show()
-        # plt.savefig("trala.png")
+        # plt.savefig("name.png")
